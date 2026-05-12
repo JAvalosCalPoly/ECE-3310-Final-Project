@@ -4,6 +4,7 @@
 // Initialize node with nullptrs
 TrieNode::TrieNode::TrieNode(){
     endOfWord = false;
+    hint = "";
     for (int i = 0; i < 26; i++){
         children[i] = nullptr;
     }
@@ -27,7 +28,7 @@ void Trie::clear(TrieNode* node){
     delete node;
 }
 
-void Trie::insert(const std::string& word){
+void Trie::insert(const std::string& word, const std::string& hint) {
     TrieNode* node = root;
     // for every character in the word
     for (char c : word){
@@ -40,18 +41,28 @@ void Trie::insert(const std::string& word){
         node = node->children[index];
     }
     node->endOfWord = true;
+    node->hint = hint;
 }
 
-bool Trie::search(const std::string& word){
+void Trie::batchInsert(std::vector<std::string>& words, std::vector<std::string>& hints){
+    for(int i = 0; i < words.size(); i++){
+        this->insert(words[i], hints[i]);
+    }
+}
+
+std::string Trie::search(const std::string& word){
     TrieNode* node = root;
     for (char c : word){
         int index = c - 'a';
         if(!node->children[index]){
-            return false;
+            return "";
         }
         node = node->children[index];
     }
-    return node->endOfWord;
+    if (node->endOfWord){
+        return node->hint;
+    }
+    return "";
 }
 
 bool Trie::startsWith(const std::string& prefix){
@@ -75,23 +86,39 @@ void Trie::deleteWord(const std::string& word){
         }
         node = node->children[index];
     }
-    if (node->endOfWord == true){
+    if (node->endOfWord){
         node->endOfWord = false;
+        node->hint = "";
     }
 }
 
-void Trie::print(TrieNode* node, std::string prefix) const {
+void Trie::printWord(TrieNode* node, std::string prefix) const {
     if (node->endOfWord){
         std::cout << prefix << std::endl;
     }
     for (int i = 0; i < 26; i++){
         if (node->children[i]){
-            print(node->children[i], prefix + char('a' + i));
+            printWord(node->children[i], prefix + char('a' + i));
         }
+    }
+}
+void Trie::printHint(const std::string& word) const {
+    TrieNode* node = root;
+    for (char c : word){
+        int index = c - 'a';
+        if (!node->children[index]){
+            return;
+        }
+        node = node->children[index];
+    }
+
+    if (node->endOfWord){
+        std::cout << node->hint << std::endl;
     }
 }
 
 void Trie::print() const {
-    print(root,"");
+    printWord(root,"");
 }
+
 
