@@ -285,6 +285,12 @@ void UI::typeLetter(char letter) {
     else {
         moveCursor(1, 0);
     }
+    if (puzzle->isCellCorrect(cursorRow, cursorCol)) {
+        gameScore.addCorrectWord();
+    } else {
+        gameScore.addIncorrectWord();
+    }
+    gameScore.calculateScore(0,0);
 }
 
 void UI::clearLetter() {
