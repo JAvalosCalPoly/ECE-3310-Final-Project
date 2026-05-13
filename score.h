@@ -9,8 +9,8 @@
 
 class score {
 private:
-    // Points added for each completely correct word.
-    const int POINTS_PER_WORD = 10;
+    // Points added for each fully completely correct word.
+    const int POINTS_PER_COMPLETED_WORD = 5;
 
     // Points subtracted for each attempted but incorrect word.
     const int POINTS_PER_PENALTY = 3;
