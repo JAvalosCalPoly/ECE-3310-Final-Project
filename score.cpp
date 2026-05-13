@@ -4,12 +4,11 @@
 score::score() : userScore(0), correctWords(0), incorrectWords(0) {}
 
 // Calculates score using the number of correct and incorrect words.
-int score::calculateScore(int wordsCorrect, int wordsIncorrect) {
-    correctWords = wordsCorrect;
-    incorrectWords = wordsIncorrect;
+int score::calculateScore(int wordsCorrect, int wordsCompleted) {
+    correctLetters = LettersCorrect;
+    completedWords = wordsCompleted;
 
-    userScore = (correctWords * POINTS_PER_WORD)
-        - (incorrectWords * POINTS_PER_PENALTY);
+    userScore = correctLetters;
 
     return userScore;
 }
@@ -25,6 +24,6 @@ int score::getCorrectWords() {
 }
 
 // Returns how many attempted words are incorrect.
-int score::getIncorrectWords() {
-    return incorrectWords;
+int score::getCorrectLetters() {
+    return correctLetters;
 }
