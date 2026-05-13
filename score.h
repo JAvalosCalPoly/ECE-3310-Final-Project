@@ -18,6 +18,7 @@ private:
 	int incorrectWords;
 
 public:
+	// Default constructor
 	score();
 
 	// Updates score based on correctness
