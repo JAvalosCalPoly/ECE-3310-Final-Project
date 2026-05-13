@@ -19,7 +19,7 @@ private:
     int userScore;
 
     // Stores how many full words are currently correct.
-    int correctWords;
+    int completedWords;
 
     //Stores how many letters are correct
     int correctLetters;
@@ -38,7 +38,7 @@ public:
     int getScore();
 
     // Returns the number of correct full words.
-    int getCorrectWords();
+    int getCompletedWords();
 
     //Returns how many letters are correct
     int getCorrectLetters();
