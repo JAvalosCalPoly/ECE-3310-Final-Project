@@ -1,5 +1,5 @@
 #include "puzzle.h"
-#include "config.h"
+#include "Config.h"
 #include "trie.h"
 #include "wordData.h"
 
