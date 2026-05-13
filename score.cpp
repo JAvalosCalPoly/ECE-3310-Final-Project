@@ -19,3 +19,7 @@ int score::calculateScore(int wordsCorrect, int wordsIncorrect) {
 	userScore = (correctWords * POINTS_PER_WORD) - (incorrectWords * POINTS_PER_PENALTY);
 	return userScore;
 }
+
+int score::getScore() {
+	return userScore;
+}

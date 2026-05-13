@@ -27,6 +27,8 @@ public:
 	// Calculates and returns final score
 	int calculateScore(int wordsCorrect, int wordsIncorrect);
 
+	int getScore();
+
 };
 
 #endif

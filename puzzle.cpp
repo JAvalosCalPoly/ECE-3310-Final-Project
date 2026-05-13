@@ -121,18 +121,17 @@ bool Puzzle::isDownStart(std::vector<std::vector<cell>>& grid, int row, int col)
 int Puzzle::getClueNum(std::vector<std::vector<cell>>& grid, int row, int col) {
     if (grid[row][col].getCellType()) return 0; // black cell has no clue number
 
-    int clueNumber = 1;
+    int clueNumber = 0;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if(!grid[i][j].getCellType()) {
                 bool startsAcross = isAcrossStart(grid, i, j);
                 bool startsDown = isDownStart(grid, i, j);
-
-                if (i == row && j == col) {
-                    if (startsAcross || startsDown) {
-                        return clueNumber; // clue number
+                if (startsAcross || startsDown) {
+                        clueNumber++;
                     }
-                        return 0; // not a clue start
+                if (i == row && j == col) {
+                    return clueNumber;
                 }
             }
         }
