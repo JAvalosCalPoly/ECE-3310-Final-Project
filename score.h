@@ -29,6 +29,8 @@ public:
 	int calculateScore(int wordsCorrect, int wordsIncorrect);
 
 	int getScore();
+	int getCorrectLetters();
+	int getIncorrectLetters();
 
 };
 
