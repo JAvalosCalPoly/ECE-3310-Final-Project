@@ -3,35 +3,42 @@
 #include <string>
 #include <vector>
 
+// score.h - header file for score.cpp
 #ifndef SCORE_H
 #define SCORE_H
 
 class score {
 private:
-	// Points constants
-	const int POINTS_PER_WORD = 10;
-	const int POINTS_PER_PENALTY = 3;
+    // Points added for each completely correct word.
+    const int POINTS_PER_WORD = 10;
 
-	// Variable declarations
-	int userScore;
-	int correctWords;
-	int incorrectWords;
+    // Points subtracted for each attempted but incorrect word.
+    const int POINTS_PER_PENALTY = 3;
+
+    // Stores the player's current score.
+    int userScore;
+
+    // Stores how many full words are currently correct.
+    int correctWords;
+
+    // Stores how many attempted words are currently incorrect.
+    int incorrectWords;
 
 public:
-	// Default constructor
-	score();
+    // Default constructor.
+    score();
 
-	// Updates score based on correctness
-	void addCorrectWord();
-	void addIncorrectWord();
+    // Recalculates the score based on the current puzzle.
+    int calculateScore(int wordsCorrect, int wordsIncorrect);
 
-	// Calculates and returns final score
-	int calculateScore(int wordsCorrect, int wordsIncorrect);
+    // Returns the current score.
+    int getScore();
 
-	int getScore();
-	int getCorrectLetters();
-	int getIncorrectLetters();
+    // Returns the number of correct full words.
+    int getCorrectWords();
 
+    // Returns the number of incorrect attempted words.
+    int getIncorrectWords();
 };
 
 #endif

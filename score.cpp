@@ -1,26 +1,30 @@
-#include <iostream>
 #include "score.h"
 
-// Initialize starting values with member initializer list
+// Initialize starting values.
 score::score() : userScore(0), correctWords(0), incorrectWords(0) {}
 
-// Increments number of correct word guesses
-void score::addCorrectWord() {
-	correctWords++;
-}
-
-// Increments number of incorrect word guesses
-void score::addIncorrectWord() {
-	incorrectWords++;
-}
-
-// Calculates and returns final score
+// Calculates score using the number of correct and incorrect words.
 int score::calculateScore(int wordsCorrect, int wordsIncorrect) {
-	userScore = (correctWords * POINTS_PER_WORD) 
-		- (incorrectWords * POINTS_PER_PENALTY);
-	return userScore;
+    correctWords = wordsCorrect;
+    incorrectWords = wordsIncorrect;
+
+    userScore = (correctWords * POINTS_PER_WORD)
+        - (incorrectWords * POINTS_PER_PENALTY);
+
+    return userScore;
 }
 
+// Returns the player's current score.
 int score::getScore() {
-	return userScore;
+    return userScore;
+}
+
+// Returns how many full words are correct.
+int score::getCorrectWords() {
+    return correctWords;
+}
+
+// Returns how many attempted words are incorrect.
+int score::getIncorrectWords() {
+    return incorrectWords;
 }
