@@ -7,6 +7,8 @@ class cell {
 
         // constructor
         cell();
+        // destructor
+        ~cell();
         // default
         cell (char letter, bool black, bool across_start, bool down_start, int num);
         bool isCorrect(); // see if word is right

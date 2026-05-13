@@ -10,6 +10,9 @@ cell::cell() {
     is_down_start = false;
     clue_num = 0;
 }
+// destructor
+cell::~cell() {
+}
 // default
 cell::cell (char letter, bool black, bool across_start, bool down_start, int num) {
     usr_letter = ' ';
