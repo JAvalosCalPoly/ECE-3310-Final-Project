@@ -9,43 +9,33 @@
 
 class score {
 private:
-    // Points added for each fully completely correct word.
+    // Points added for each fully completed correct word.
     const int POINTS_PER_COMPLETED_WORD = 5;
-
-    // Points subtracted for each attempted but incorrect word.
-    const int POINTS_PER_PENALTY = 3;
 
     // Stores the player's current score.
     int userScore;
 
-    // Stores how many full words are currently correct.
+    // Stores how many full words are currently completed correctly.
     int completedWords;
 
-    //Stores how many letters are correct
+    // Stores how many letters are correct.
     int correctLetters;
-
-    // Stores how many attempted words are currently incorrect.
-    int incorrectWords;
 
 public:
     // Default constructor.
     score();
 
-    // Recalculates the score based on the current puzzle.
+    // Recalculates the score based on correct letters and completed words.
     int calculateScore(int lettersCorrect, int wordsCompleted);
 
     // Returns the current score.
     int getScore();
 
-    // Returns the number of correct full words.
+    // Returns the number of completed words.
     int getCompletedWords();
 
-    //Returns how many letters are correct
+    // Returns how many letters are correct.
     int getCorrectLetters();
-
-    // Returns the number of incorrect attempted words.
-    int getIncorrectWords();
 };
 
 #endif
-
