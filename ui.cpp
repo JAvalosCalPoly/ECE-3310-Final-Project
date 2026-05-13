@@ -205,16 +205,30 @@ void UI::renderGrid() {
 void UI::renderScore() {
     if (puzzle == nullptr) {
         std::cout << "Score: 0\n";
+        std::cout << "Completed words: 0\n";
         return;
     }
 
-    int correctWords = 0;
-    int incorrectWords = 0;
+    int correctLetters = 0;
+    int completedWords = 0;
 
-    // Check every possible starting cell in the puzzle.
+    // Count correct letters across the entire grid.
     for (int row = 0; row < puzzle->getRows(); row++) {
         for (int col = 0; col < puzzle->getCols(); col++) {
+            if (!puzzle->isBlack(row, col)) {
+                char userLetter = puzzle->getCell(row, col).getUsrLetter();
 
+                // Only filled cells can count toward the score.
+                if (userLetter != ' ' && puzzle->isCellCorrect(row, col)) {
+                    correctLetters++;
+                }
+            }
+        }
+    }
+
+    // Count completed across and down words.
+    for (int row = 0; row < puzzle->getRows(); row++) {
+        for (int col = 0; col < puzzle->getCols(); col++) {
             if (puzzle->isBlack(row, col)) {
                 continue;
             }
@@ -225,7 +239,6 @@ void UI::renderScore() {
             if (currentCell.getIsAcrossStart()) {
                 bool wordComplete = true;
                 bool wordCorrect = true;
-                bool wordAttempted = false;
 
                 int currentCol = col;
 
@@ -234,10 +247,6 @@ void UI::renderScore() {
 
                     char userLetter = puzzle->getCell(row, currentCol).getUsrLetter();
                     char correctLetter = puzzle->getCell(row, currentCol).getLetter();
-
-                    if (userLetter != ' ') {
-                        wordAttempted = true;
-                    }
 
                     if (userLetter == ' ') {
                         wordComplete = false;
@@ -251,10 +260,7 @@ void UI::renderScore() {
                 }
 
                 if (wordComplete && wordCorrect) {
-                    correctWords++;
-                }
-                else if (wordComplete && !wordCorrect) {
-                    incorrectWords++;
+                    completedWords++;
                 }
             }
 
@@ -262,7 +268,6 @@ void UI::renderScore() {
             if (currentCell.getIsDownStart()) {
                 bool wordComplete = true;
                 bool wordCorrect = true;
-                bool wordAttempted = false;
 
                 int currentRow = row;
 
@@ -271,10 +276,6 @@ void UI::renderScore() {
 
                     char userLetter = puzzle->getCell(currentRow, col).getUsrLetter();
                     char correctLetter = puzzle->getCell(currentRow, col).getLetter();
-
-                    if (userLetter != ' ') {
-                        wordAttempted = true;
-                    }
 
                     if (userLetter == ' ') {
                         wordComplete = false;
@@ -288,20 +289,17 @@ void UI::renderScore() {
                 }
 
                 if (wordComplete && wordCorrect) {
-                    correctWords++;
-                }
-                else if (wordComplete && !wordCorrect) {
-                    incorrectWords++;
+                    completedWords++;
                 }
             }
         }
     }
 
-    int currentScore = gameScore.calculateScore(correctWords, incorrectWords);
+    int currentScore = gameScore.calculateScore(correctLetters, completedWords);
 
     std::cout << "Score: " << currentScore << "\n";
-    std::cout << "Correct words: " << gameScore.getCorrectWords() << "\n";
-    std::cout << "Incorrect words: " << gameScore.getIncorrectWords() << "\n";
+    std::cout << "Correct letters: " << gameScore.getCorrectLetters() << "\n";
+    std::cout << "Completed words: " << gameScore.getCompletedWords() << "\n";
 }
 
 void UI::doInput() {
