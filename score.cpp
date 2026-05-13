@@ -1,11 +1,11 @@
 #include "score.h"
 
 // Initialize starting values.
-score::score() : userScore(0), correctWords(0), incorrectWords(0) {}
+score::score() : userScore(0), correctWords(0), correctLetters(0) {}
 
 // Calculates score using the number of correct and incorrect words.
-int score::calculateScore(int wordsCorrect, int wordsCompleted) {
-    correctLetters = LettersCorrect;
+int score::calculateScore(int lettersCorrect, int wordsCompleted) {
+    correctLetters = lettersCorrect;
     completedWords = wordsCompleted;
 
     //Each correct letter is 1 point
