@@ -11,6 +11,8 @@ struct PlacementChange {
     int col;
 };
 
+bool isLetterCell(char cell);
+
 bool canPlaceWord(vector<string>& grid, string word, int row, int col, char dir);
 
 vector<PlacementChange> placeWord(vector<string>& grid, string word, int row, int col, char dir);

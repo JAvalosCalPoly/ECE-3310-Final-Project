@@ -26,10 +26,8 @@ UI::UI(Puzzle* puzzle) {
 }
 
 void UI::run() {
-    char input;
     while (isRunning) {
         render();
-        std::cout << "input: ";
         doInput();
     }
 }
@@ -205,7 +203,7 @@ void UI::renderScore() {
 }
 
 void UI::doInput() {
-    char input;
+    unsigned char input;
     input = _getch();
     if (input == ':') {
         int command = _getch();

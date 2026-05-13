@@ -5,11 +5,54 @@
 
 using namespace std;
 
-
+bool isLetterCell(char cell) {
+    return cell != '.' && cell != '#';
+}
 
 bool canPlaceWord(vector<string>& grid, string word, int row, int col, char dir) {
     int n = grid.size();
+    int wordLength = word.length();
     bool hasIntersection = false;
+
+    // Check if word fits inside grid - added by Jonathan
+    if (dir == 'A') {
+        if (col + wordLength > n) {
+            return false;
+        }
+    }
+    else {
+        if (row + wordLength > n) {
+            return false;
+        }
+    }
+
+    // Check cell before the word - added by Jonathan
+    if (dir == 'A') {
+        if (col > 0 && isLetterCell(grid[row][col - 1])) {
+            return false;
+        }
+    }
+    else {
+        if (row > 0 && isLetterCell(grid[row - 1][col])) {
+            return false;
+        }
+    }
+
+    // Check cell after the word - added by Jonathan
+    if (dir == 'A') {
+        int afterCol = col + wordLength;
+
+        if (afterCol < n && isLetterCell(grid[row][afterCol])) {
+            return false;
+        }
+    }
+    else {
+        int afterRow = row + wordLength;
+
+        if (afterRow < n && isLetterCell(grid[afterRow][col])) {
+            return false;
+        }
+    }
 
     for (int i = 0; i < word.length(); i++) {
         int r = row;
@@ -31,7 +74,30 @@ bool canPlaceWord(vector<string>& grid, string word, int row, int col, char dir)
 
         if (grid[r][c] == word[i])
             hasIntersection = true;
+        // - added by Jonathan to check if the word is being placed next to another word without intersecting
+        if (grid[r][c] == '.') {
+        if (dir == 'A') {
+            if (r > 0 && isLetterCell(grid[r - 1][c])) {
+                return false;
+            }
+
+            if (r + 1 < n && isLetterCell(grid[r + 1][c])) {
+                return false;
+            }
+        }
+        else {
+            if (c > 0 && isLetterCell(grid[r][c - 1])) {
+                return false;
+            }
+
+            if (c + 1 < n && isLetterCell(grid[r][c + 1])) {
+                return false;
+            }
+        }
     }
+    }
+      //
+    
 
     bool gridEmpty = true;
 

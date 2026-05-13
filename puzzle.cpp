@@ -28,9 +28,10 @@ void Puzzle::loadGrid(const std::vector<std::string>& wordGrid) {
     for (int i=0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             char currentLetter = wordGrid[i][j];
-            bool black = (currentLetter == '#');
-            char letter = black ? ' ' : currentLetter; // if black
-            grid[i][j] = cell(letter, black, false, false, 0); // cell with the letter and black status
+            bool black = (currentLetter == '#' || currentLetter == '.');
+            char letter = black ? ' ' : currentLetter;
+
+            grid[i][j] = cell(letter, black, false, false, 0);
         }
     }
     // clue numbering, across, and down
@@ -192,6 +193,15 @@ std::string Puzzle::getWordDown(int row, int col) {
     return word;
 }
 
+// std::string Puzzle::findHintForWord(const std::string& word) {
+//     for (int i = 0; i < static_cast<int>(wordList.size()) && i < static_cast<int>(hintList.size()); i++) {
+//         if (wordList[i] == word) {
+//             return hintList[i];
+//         }
+//     }
+
+//     return "No hint found";
+// }
 std::string Puzzle::findHintForWord(const std::string& word) {
     for (int i = 0; i < static_cast<int>(wordList.size()) && i < static_cast<int>(hintList.size()); i++) {
         if (wordList[i] == word) {
@@ -199,5 +209,5 @@ std::string Puzzle::findHintForWord(const std::string& word) {
         }
     }
 
-    return "No hint found";
+    return "No hint found for: " + word;
 }
