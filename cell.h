@@ -4,6 +4,11 @@
 // cells in the crossword puzzle
 class cell {
     public:
+
+        // constructor
+        cell();
+        // default
+        cell (char letter, bool black, bool across_start, bool down_start, int num);
         bool isCorrect(); // see if word is right
         // setters
         void setUsrLetter(char letter); // set the user's letter in the cell
@@ -21,11 +26,11 @@ class cell {
         int getClueNum(); // get the clue number for the cell
     private:
         char usr_letter = ' '; // the letter user input
-        char right_letter; // the letter in the cell
-        bool is_black; // cell is black or not
-        bool is_across_start;   // starts an across word
-        bool is_down_start;     // starts a down word
-        int clue_num; // clue number for the cell
+        char right_letter = ' '; // the letter in the cell
+        bool is_black = false; // cell is black or not
+        bool is_across_start = false;   // starts an across word
+        bool is_down_start = false;     // starts a down word
+        int clue_num = 0; // clue number for the cell
 };
 
 #endif

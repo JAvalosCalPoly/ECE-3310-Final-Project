@@ -1,6 +1,24 @@
 // cell.cpp
 #include "cell.h"
 
+// constructor
+cell::cell() {
+    usr_letter = ' ';
+    right_letter = ' ';
+    is_black = false;
+    is_across_start = false;
+    is_down_start = false;
+    clue_num = 0;
+}
+// default
+cell::cell (char letter, bool black, bool across_start, bool down_start, int num) {
+    usr_letter = ' ';
+    right_letter = letter;
+    is_black = black;
+    is_across_start = across_start;
+    is_down_start = down_start;
+    clue_num = num;
+}
 void cell::setUsrLetter(char letter) {
     usr_letter = letter;
 }
