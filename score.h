@@ -21,6 +21,9 @@ private:
     // Stores how many full words are currently correct.
     int correctWords;
 
+    //Stores how many letters are correct
+    int correctLetters;
+
     // Stores how many attempted words are currently incorrect.
     int incorrectWords;
 
@@ -29,13 +32,16 @@ public:
     score();
 
     // Recalculates the score based on the current puzzle.
-    int calculateScore(int wordsCorrect, int wordsIncorrect);
+    int calculateScore(int wordsCorrect, int wordsCompleted);
 
     // Returns the current score.
     int getScore();
 
     // Returns the number of correct full words.
     int getCorrectWords();
+
+    //Returns how many letters are correct
+    int getCorrectLetters();
 
     // Returns the number of incorrect attempted words.
     int getIncorrectWords();
