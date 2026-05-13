@@ -1,7 +1,7 @@
 #include "score.h"
 
 // Initialize starting values.
-score::score() : userScore(0), correctWords(0), correctLetters(0) {}
+score::score() : userScore(0), completedWords(0), correctLetters(0) {}
 
 // Calculates score using the number of correct and incorrect words.
 int score::calculateScore(int lettersCorrect, int wordsCompleted) {
@@ -21,8 +21,8 @@ int score::getScore() {
 }
 
 // Returns how many full words are correct.
-int score::getCorrectWords() {
-    return correctWords;
+int score::getCompletedWords() {
+    return completedtWords;
 }
 
 // Returns how many attempted words are incorrect.
