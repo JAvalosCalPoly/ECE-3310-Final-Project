@@ -1,7 +1,7 @@
 #include <iostream>
 #include "score.h"
 
-// Initialize starting values
+// Initialize starting values with member initializer list
 score::score() : userScore(0), correctWords(0), incorrectWords(0) {}
 
 // Increments number of correct word guesses

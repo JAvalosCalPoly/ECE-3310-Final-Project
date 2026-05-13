@@ -17,9 +17,9 @@ vector<PlacementChange> placeWord(vector<string>& grid, string word, int row, in
 
 void removeWord(vector<string>& grid, vector<PlacementChange>& changedCells);
 
-bool solve(vector<string>& grid, vector<string>& words, int index);
+bool generate(vector<string>& grid, vector<string>& words, int index);
 
-void printGrid(vector<string>& grid);
+//void printGrid(vector<string>& grid);
 
 void addRandomBlocks(vector<string>& grid, int numberOfBlocks);
 

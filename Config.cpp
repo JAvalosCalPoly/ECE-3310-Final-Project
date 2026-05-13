@@ -76,7 +76,8 @@ void removeWord(vector<string>& grid, vector<PlacementChange>& changedCells) {
     }
 }
 
-bool solve(vector<string>& grid, vector<string>& words, int index) {
+//Backtracking function to generate the crossword puzzle
+bool generate(vector<string>& grid, vector<string>& words, int index) {
     int n = grid.size();
 
     if (index == words.size())
@@ -104,7 +105,7 @@ for (int row : rows) {
             if (canPlaceWord(grid, word, row, col, 'A')) {
                 vector<PlacementChange> changes = placeWord(grid, word, row, col, 'A');
 
-                if (solve(grid, words, index + 1))
+                if (generate(grid, words, index + 1))
                     return true;
 
                 removeWord(grid, changes);
@@ -113,7 +114,7 @@ for (int row : rows) {
             if (canPlaceWord(grid, word, row, col, 'D')) {
                 vector<PlacementChange> changes = placeWord(grid, word, row, col, 'D');
 
-                if (solve(grid, words, index + 1))
+                if (generate(grid, words, index + 1))
                     return true;
 
                 removeWord(grid, changes);
@@ -124,14 +125,15 @@ for (int row : rows) {
     return false;
 }
 
-void printGrid(vector<string>& grid) {
+//Function to print the grid for testing purposes
+/*void printGrid(vector<string>& grid) {
     for (string row : grid) {
         for (char cell : row) {
             cout << cell << ' ';
         }
         cout << endl;
     }
-}
+}*/
 
 void addRandomBlocks(vector<string>& grid, int numberOfBlocks) {
     int n = grid.size();
