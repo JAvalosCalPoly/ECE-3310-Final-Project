@@ -8,7 +8,9 @@ int score::calculateScore(int wordsCorrect, int wordsCompleted) {
     correctLetters = LettersCorrect;
     completedWords = wordsCompleted;
 
-    userScore = correctLetters;
+    //Each correct letter is 1 point
+    //Each completed word adds 5 bonuns points
+    userScore = correctLetters +(completedWords * POINTS_PER_COMPLETED_WORD);
 
     return userScore;
 }
