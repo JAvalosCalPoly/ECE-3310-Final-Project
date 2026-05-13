@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <random>
+#include <ctime>
 
 void printGrid(const std::vector<std::string>& grid) {
     for (int row = 0; row < static_cast<int>(grid.size()); row++) {
@@ -15,11 +17,26 @@ void printGrid(const std::vector<std::string>& grid) {
 
 std::vector<std::string> getWordsForPuzzle(int amount) {
     std::vector<std::string> selectedWords;
+    std::vector<int> usedIndexes;
 
-    for (int i = 0; i < amount && i < static_cast<int>(wordList.size()); i++) {
-        selectedWords.push_back(wordList[i]);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    while (selectedWords.size() < amount && selectedWords.size() < wordList.size()) {
+        std::uniform_int_distribution<> distr(0, wordList.size() - 1);
+        int randomIndex = distr(gen);
+        bool alreadyUsed = false;
+
+        for (int i = 0; i < usedIndexes.size(); i++) {
+            if (usedIndexes[i] == randomIndex) {
+                alreadyUsed = true;
+            }
+        }
+        if (!alreadyUsed) {
+            usedIndexes.push_back(randomIndex);
+            selectedWords.push_back(wordList[randomIndex]);
+        }
     }
-
     return selectedWords;
 }
 

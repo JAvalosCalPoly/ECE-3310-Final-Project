@@ -36,7 +36,7 @@ void UI::render() {
     // clear terminal by printing newlines
     std::cout << std::string(100, '\n');
 
-    std::cout << "-------------------- CROSSWORD PUZZLE --------------------\n\n";
+    std::cout << "-------------------- CROSSWORD PUZZLE --------------------\n";
 
     renderBoardWithHints();
 
@@ -69,12 +69,14 @@ void UI::renderBoardWithHints() {
         totalLines = hintLines;
     }
 
+    int gridWidth = puzzle->getCols() * 4; 
+
     std::cout << "PUZZLE";
-    std::cout << std::string(30, ' ');
+    std::cout << std::string(gridWidth, ' ');
     std::cout << "HINTS\n";
 
     std::cout << "------";
-    std::cout << std::string(30, ' ');
+    std::cout << std::string(gridWidth, ' ');
     std::cout << "------\n";
 
     for (int i = 0; i < totalLines; i++) {
@@ -85,7 +87,7 @@ void UI::renderBoardWithHints() {
             std::cout << std::string(puzzle->getCols() * 4, ' ');
         }
 
-        std::cout << "     ";
+        std::cout << std::string(gridWidth - 35, ' ');
 
         if (i < hintLines) {
             std::cout << getHintLine(i);
