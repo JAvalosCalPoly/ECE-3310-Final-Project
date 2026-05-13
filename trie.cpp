@@ -15,10 +15,12 @@ Trie::Trie(){
     root = new TrieNode();
 }
 
+// Trie destructor
 Trie::~Trie(){
     clear(root);
 }
 
+// Helper function for destructor
 void Trie::clear(TrieNode* node){
     for (int i = 0; i < 26; i++){
         if (node->children[i]){
@@ -28,6 +30,7 @@ void Trie::clear(TrieNode* node){
     delete node;
 }
 
+// Function to insert a word into the trie
 void Trie::insert(const std::string& word, const std::string& hint) {
     TrieNode* node = root;
     // for every character in the word
@@ -41,15 +44,18 @@ void Trie::insert(const std::string& word, const std::string& hint) {
         node = node->children[index];
     }
     node->endOfWord = true;
+    // place the hint associated with that word at the end of the word
     node->hint = hint;
 }
 
+// Function to insert multiple words into a trie from a list/vector of words and hints
 void Trie::batchInsert(std::vector<std::string>& words, std::vector<std::string>& hints){
     for(int i = 0; i < words.size(); i++){
         this->insert(words[i], hints[i]);
     }
 }
 
+// Function to search for a word from the trie
 std::string Trie::search(const std::string& word){
     TrieNode* node = root;
     for (char c : word){
@@ -65,6 +71,7 @@ std::string Trie::search(const std::string& word){
     return "";
 }
 
+// Function to check if a word from the trie starts with a letter
 bool Trie::startsWith(const std::string& prefix){
     TrieNode* node = root;
     for (char c : prefix){
@@ -77,6 +84,7 @@ bool Trie::startsWith(const std::string& prefix){
     return true;
 }
 
+// Function to delete a word
 void Trie::deleteWord(const std::string& word){
     TrieNode* node = root;
     for (char c : word){
@@ -92,6 +100,7 @@ void Trie::deleteWord(const std::string& word){
     }
 }
 
+// Function to print a word
 void Trie::printWord(TrieNode* node, std::string prefix) const {
     if (node->endOfWord){
         std::cout << prefix << std::endl;
@@ -102,6 +111,8 @@ void Trie::printWord(TrieNode* node, std::string prefix) const {
         }
     }
 }
+
+// Function to print a hint from the word the hint is for
 void Trie::printHint(const std::string& word) const {
     TrieNode* node = root;
     for (char c : word){
@@ -117,8 +128,7 @@ void Trie::printHint(const std::string& word) const {
     }
 }
 
+// User accessible print function to print all the words
 void Trie::print() const {
     printWord(root,"");
 }
-
-
