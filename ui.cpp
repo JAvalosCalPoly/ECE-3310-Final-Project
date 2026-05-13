@@ -386,9 +386,9 @@ void UI::typeLetter(char letter) {
         moveCursor(1, 0);
     }
     if (puzzle->isCellCorrect(cursorRow, cursorCol)) {
-        gameScore.addCorrectWord();
+        gameScore.getCorrectWords();
     } else {
-        gameScore.addIncorrectWord();
+        gameScore.getIncorrectWords();
     }
     gameScore.calculateScore(0,0);
 }
