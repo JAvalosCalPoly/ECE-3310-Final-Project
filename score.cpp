@@ -16,7 +16,8 @@ void score::addIncorrectWord() {
 
 // Calculates and returns final score
 int score::calculateScore(int wordsCorrect, int wordsIncorrect) {
-	userScore = (correctWords * POINTS_PER_WORD) - (incorrectWords * POINTS_PER_PENALTY);
+	userScore = (correctWords * POINTS_PER_WORD) 
+		- (incorrectWords * POINTS_PER_PENALTY);
 	return userScore;
 }
 
