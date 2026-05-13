@@ -253,7 +253,7 @@ void UI::renderScore() {
                 if (wordComplete && wordCorrect) {
                     correctWords++;
                 }
-                else if (wordAttempted) {
+                else if (wordComplete && !wordCorrect) {
                     incorrectWords++;
                 }
             }
@@ -290,7 +290,7 @@ void UI::renderScore() {
                 if (wordComplete && wordCorrect) {
                     correctWords++;
                 }
-                else if (wordAttempted) {
+                else if (wordComplete && !wordCorrect) {
                     incorrectWords++;
                 }
             }
