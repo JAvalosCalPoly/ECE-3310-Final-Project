@@ -32,7 +32,7 @@ public:
     score();
 
     // Recalculates the score based on the current puzzle.
-    int calculateScore(int wordsCorrect, int wordsCompleted);
+    int calculateScore(int lettersCorrect, int wordsCompleted);
 
     // Returns the current score.
     int getScore();
