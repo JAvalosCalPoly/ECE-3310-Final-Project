@@ -16,53 +16,87 @@ Puzzle::Puzzle(int rows, int cols) {
 
 void Puzzle::loadGrid(const std::vector<std::string>& wordGrid) {
     rows = wordGrid.size();
+
+    // If grid is empty, stop here.
     if (rows == 0) {
         cols = 0;
         grid.clear();
-        return; // empty grid for whatever reason
+        acrossHints.clear();
+        downHints.clear();
+        return;
     }
+
     cols = wordGrid[0].size();
+
+    // Clear old data.
     grid.clear();
-    grid.resize(rows, std::vector<cell>(cols)); // initialize puzzle with the dimensions
-    // loop through the grid and set the cells
-    for (int i=0; i < rows; i++) {
+    acrossHints.clear();
+    downHints.clear();
+
+    // Make the grid the right size.
+    grid.resize(rows, std::vector<cell>(cols));
+
+    // Copy letters into the puzzle grid.
+    for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             char currentLetter = wordGrid[i][j];
-            bool black = (currentLetter == '#' || currentLetter == '.');
-            char letter = black ? ' ' : currentLetter;
 
-            grid[i][j] = cell(letter, black, false, false, 0);
-        }
-    }
-    // clue numbering, across, and down
-    for (int i=0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (!grid[i][j].getCellType()) { // if we not black
-                bool across_start = isAcrossStart(grid, i, j);
-                bool down_start = isDownStart(grid, i, j);
-                int clue_num = getClueNum(grid, i, j);
-                grid[i][j].setIsAcrossStart(across_start);
-                grid[i][j].setIsDownStart(down_start);
-                grid[i][j].setClueNum(clue_num);
+            bool isBlack = false;
+
+            if (currentLetter == '#' || currentLetter == '.') {
+                isBlack = true;
+            }
+
+            if (isBlack) {
+                grid[i][j] = cell(' ', true, false, false, 0);
+            }
+            else {
+                grid[i][j] = cell(currentLetter, false, false, false, 0);
             }
         }
     }
 
-    // clue to hint mapping
-    for (int i=0; i < rows; i++) {
+    int clueNumber = 1;
+
+    // Go left to right, top to bottom.
+    for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (!grid[i][j].getCellType()) { // if we not black
-                int clue_num = grid[i][j].getClueNum();
-                if (clue_num != 0 && grid[i][j].getIsAcrossStart()) {
+
+            // Skip black cells.
+            if (grid[i][j].getCellType()) {
+                continue;
+            }
+
+            bool acrossStart = isAcrossStart(grid, i, j);
+            bool downStart = isDownStart(grid, i, j);
+
+            // Only number cells that start a word.
+            if (acrossStart || downStart) {
+                grid[i][j].setClueNum(clueNumber);
+                grid[i][j].setIsAcrossStart(acrossStart);
+                grid[i][j].setIsDownStart(downStart);
+
+                // Add across hint.
+                if (acrossStart) {
                     std::string word = getWordAcross(i, j);
                     std::string hint = findHintForWord(word);
-                    acrossHints[clue_num] = hint;
+                    acrossHints[clueNumber] = 
+                        "(row " + std::to_string(i+1) +
+                        ", col " + std::to_string(j+1) +
+                        ") " + hint;
                 }
-                if (clue_num != 0 && grid[i][j].getIsDownStart()) {
+
+                // Add down hint.
+                if (downStart) {
                     std::string word = getWordDown(i, j);
                     std::string hint = findHintForWord(word);
-                    downHints[clue_num] = hint;
+                    downHints[clueNumber] = 
+                        "(row " + std::to_string(i+1) + 
+                        ", col " + std::to_string(j+1) +
+                        ") " + hint;
                 }
+
+                clueNumber++;
             }
         }
     }
