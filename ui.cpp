@@ -359,36 +359,35 @@ void UI::moveCursor(int rowDiff, int colDiff) {
 
 void UI::typeLetter(char letter) {
     if (puzzle == nullptr) return;
+
     if (!puzzle->inBounds(cursorRow, cursorCol)) {
         return;
     }
+
     if (puzzle->isBlack(cursorRow, cursorCol)) {
         return;
     }
-    // uppercase to lowercase
+
+    // Convert uppercase letters to lowercase.
     if (letter >= 'A' && letter <= 'Z') {
         letter = letter - 'A' + 'a';
     }
+
     puzzle->setUsrLetter(cursorRow, cursorCol, letter);
-    
+
     if (puzzle->isPuzzleComplete()) {
         render();
         std::cout << "Congratulations! You've completed the puzzle!\n";
         isRunning = false;
         return;
     }
+
     if (currentDirection == across) {
         moveCursor(0, 1);
     }
     else {
         moveCursor(1, 0);
     }
-    if (puzzle->isCellCorrect(cursorRow, cursorCol)) {
-        gameScore.getCorrectWords();
-    } else {
-        gameScore.getIncorrectWords();
-    }
-    gameScore.calculateScore(0,0);
 }
 
 void UI::clearLetter() {
