@@ -46,6 +46,25 @@ void Puzzle::loadGrid(const std::vector<std::string>& wordGrid) {
             }
         }
     }
+
+    // clue to hint mapping
+    for (int i=0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (!grid[i][j].getCellType()) { // if we not black
+                int clue_num = grid[i][j].getClueNum();
+                if (clue_num != 0 && grid[i][j].getIsAcrossStart()) {
+                    std::string word = getWordAcross(i, j);
+                    std::string hint = findHintForWord(word);
+                    acrossHints[clue_num] = hint;
+                }
+                if (clue_num != 0 && grid[i][j].getIsDownStart()) {
+                    std::string word = getWordDown(i, j);
+                    std::string hint = findHintForWord(word);
+                    downHints[clue_num] = hint;
+                }
+            }
+        }
+    }
 }
 
 int Puzzle::getRows() {
@@ -137,4 +156,48 @@ int Puzzle::getClueNum(std::vector<std::vector<cell>>& grid, int row, int col) {
         }
     }
     return 0;
+}
+
+const std::map<int, std::string>& Puzzle::getAcrossHints() const {
+    return acrossHints;
+}
+
+const std::map<int, std::string>& Puzzle::getDownHints() const {
+    return downHints;
+}
+
+std::string Puzzle::getWordAcross(int row, int col) {
+    std::string word = "";
+
+    int currentCol = col;
+
+    while (currentCol < cols && !grid[row][currentCol].getCellType()) {
+        word += grid[row][currentCol].getLetter();
+        currentCol++;
+    }
+
+    return word;
+}
+
+std::string Puzzle::getWordDown(int row, int col) {
+    std::string word = "";
+
+    int currentRow = row;
+
+    while (currentRow < rows && !grid[currentRow][col].getCellType()) {
+        word += grid[currentRow][col].getLetter();
+        currentRow++;
+    }
+
+    return word;
+}
+
+std::string Puzzle::findHintForWord(const std::string& word) {
+    for (int i = 0; i < static_cast<int>(wordList.size()) && i < static_cast<int>(hintList.size()); i++) {
+        if (wordList[i] == word) {
+            return hintList[i];
+        }
+    }
+
+    return "No hint found";
 }

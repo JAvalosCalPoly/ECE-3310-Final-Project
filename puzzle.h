@@ -5,6 +5,7 @@
 #include "Config.h"
 #include <vector>
 #include <string>
+#include <map>
 
 class Puzzle {
     public:
@@ -31,6 +32,9 @@ class Puzzle {
     // get grid, user will only read it so it is const btw :)
     const std::vector<std::vector<cell>>& getGrid() const;
 
+    const std::map<int, std::string>& getAcrossHints() const;
+    const std::map<int, std::string>& getDownHints() const;
+
     private:
         std::vector<std::vector<cell>> grid;
         int rows;
@@ -39,6 +43,12 @@ class Puzzle {
         bool isAcrossStart(std::vector<std::vector<cell>>& grid, int row, int col);
         bool isDownStart(std::vector<std::vector<cell>>& grid, int row, int col);
         int getClueNum(std::vector<std::vector<cell>>& grid, int row, int col);
+        std::map<int, std::string> acrossHints;
+        std::map<int, std::string> downHints;
+
+        std::string getWordAcross(int row, int col);
+        std::string getWordDown(int row, int col);
+        std::string findHintForWord(const std::string& word);
 };
 
 #endif

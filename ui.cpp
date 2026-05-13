@@ -1,5 +1,4 @@
 #include "ui.h"
-#include "wordData.h"
 #include <iostream>
 #include <string>
 #include <conio.h>
@@ -61,8 +60,15 @@ void UI::renderBoardWithHints() {
 
     int totalLines = puzzle->getRows();
 
-    if (static_cast<int>(hintList.size()) > totalLines) {
-        totalLines = hintList.size();
+    int hintLines = 2;
+
+    if (puzzle != nullptr) {
+        hintLines += puzzle->getAcrossHints().size();
+        hintLines += puzzle->getDownHints().size();
+    }
+
+    if (hintLines > totalLines) {
+        totalLines = hintLines;
     }
 
     std::cout << "PUZZLE";
@@ -83,7 +89,7 @@ void UI::renderBoardWithHints() {
 
         std::cout << "     ";
 
-        if (i < static_cast<int>(hintList.size())) {
+        if (i < hintLines) {
             std::cout << getHintLine(i);
         }
 
@@ -124,13 +130,47 @@ std::string UI::getGridLine(int row) {
 std::string UI::getHintLine(int index) {
     std::string line = "";
 
-    if (index < 0 || index >= static_cast<int>(hintList.size())) {
+    if (puzzle == nullptr) {
         return line;
     }
 
-    line += std::to_string(index + 1);
-    line += ". ";
-    line += hintList[index];
+    const std::map<int, std::string>& across = puzzle->getAcrossHints();
+    const std::map<int, std::string>& down = puzzle->getDownHints();
+
+    int currentIndex = 0;
+
+    if (index == 0) {
+        return "Across:\n";
+    }
+
+    currentIndex = 1;
+
+    for (std::map<int, std::string>::const_iterator it = across.begin(); it != across.end(); ++it) {
+        if (currentIndex == index) {
+            line += std::to_string(it->first);
+            line += ". ";
+            line += it->second;
+            return line;
+        }
+
+        currentIndex++;
+    }
+    if (currentIndex == index) {
+        return "Down:";
+    }
+
+    currentIndex++;
+
+    for (std::map<int, std::string>::const_iterator it = down.begin(); it != down.end(); ++it) {
+        if (currentIndex == index) {
+            line += std::to_string(it->first);
+            line += ". ";
+            line += it->second;
+            return line;
+        }
+
+        currentIndex++;
+    }
 
     return line;
 }
